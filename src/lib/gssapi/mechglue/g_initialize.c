@@ -708,6 +708,7 @@ build_dynamicMech(void *dl, const gss_OID mech_type)
 	GSS_ADD_DYNAMIC_METHOD_NOLOOP(dl, mech, gss_context_time);
 	GSS_ADD_DYNAMIC_METHOD_NOLOOP(dl, mech, gss_get_mic);
 	GSS_ADD_DYNAMIC_METHOD_NOLOOP(dl, mech, gss_verify_mic);
+	GSS_ADD_DYNAMIC_METHOD_NOLOOP(dl, mech, gss_extended_get_session_key);
 	GSS_ADD_DYNAMIC_METHOD_NOLOOP(dl, mech, gss_wrap);
 	GSS_ADD_DYNAMIC_METHOD_NOLOOP(dl, mech, gss_unwrap);
 	GSS_ADD_DYNAMIC_METHOD_NOLOOP(dl, mech, gss_display_status);

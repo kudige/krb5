@@ -69,6 +69,7 @@ gss_export_cred
 gss_export_name
 gss_export_name_composite
 gss_export_sec_context
+gss_extended_get_session_key
 gss_get_mic
 gss_get_mic_iov
 gss_get_mic_iov_length

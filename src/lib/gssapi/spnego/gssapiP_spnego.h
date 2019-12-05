@@ -351,6 +351,15 @@ OM_uint32 KRB5_CALLCONV spnego_gss_verify_mic
 );
 
 OM_uint32 KRB5_CALLCONV
+spnego_gss_extended_get_session_key
+(
+    OM_uint32 *minor_status,
+    gss_ctx_id_t context_handle,
+    gss_qop_t qop_req,
+    gss_buffer_t sessionkey
+);
+
+OM_uint32 KRB5_CALLCONV
 spnego_gss_inquire_sec_context_by_oid
 (
 	OM_uint32 *minor_status,

@@ -1199,6 +1199,18 @@ iakerb_gss_verify_mic(OM_uint32 *minor_status, gss_ctx_id_t context_handle,
 }
 
 OM_uint32 KRB5_CALLCONV
+iakerb_gss_extended_get_session_key(OM_uint32 *minor_status, gss_ctx_id_t context_handle,
+                   gss_qop_t qop_req, gss_buffer_t sessionkey)
+{
+    iakerb_ctx_id_t ctx = (iakerb_ctx_id_t)context_handle;
+
+    if (ctx->gssc == GSS_C_NO_CONTEXT)
+        return GSS_S_NO_CONTEXT;
+
+    return krb5_gss_extended_get_session_key(minor_status, ctx->gssc, qop_req, sessionkey);
+}
+
+OM_uint32 KRB5_CALLCONV
 iakerb_gss_inquire_sec_context_by_oid(OM_uint32 *minor_status,
                                       const gss_ctx_id_t context_handle,
                                       const gss_OID desired_object,

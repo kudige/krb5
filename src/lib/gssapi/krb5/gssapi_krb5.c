@@ -841,6 +841,7 @@ static struct gss_config krb5_mechanism = {
     krb5_gss_context_time,
     krb5_gss_get_mic,
     krb5_gss_verify_mic,
+    krb5_gss_extended_get_session_key,
 #if defined(IOV_SHIM_EXERCISE_WRAP) || defined(IOV_SHIM_EXERCISE)
     NULL,
 #else
@@ -934,6 +935,7 @@ static struct gss_config iakerb_mechanism = {
     iakerb_gss_context_time,
     iakerb_gss_get_mic,
     iakerb_gss_verify_mic,
+    iakerb_gss_extended_get_session_key,
 #if defined(IOV_SHIM_EXERCISE_WRAP) || defined(IOV_SHIM_EXERCISE)
     NULL,
 #else

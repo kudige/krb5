@@ -117,6 +117,88 @@ gss_buffer_t		msg_token;
     return (GSS_S_BAD_MECH);
 }
 
+static OM_uint32
+val_session_key_args(
+    OM_uint32 *minor_status,
+    gss_ctx_id_t context_handle,
+    gss_qop_t qop_req,
+    gss_buffer_t sessionkey)
+{
+
+    /* Initialize outputs. */
+
+    if (minor_status != NULL)
+	*minor_status = 0;
+
+    if (sessionkey != GSS_C_NO_BUFFER) {
+        sessionkey->value = NULL;
+        sessionkey->length = 0;
+    }
+
+    /* Validate arguments. */
+
+    if (minor_status == NULL)
+	    return (GSS_S_CALL_INACCESSIBLE_WRITE);
+
+    if (context_handle == GSS_C_NO_CONTEXT)
+	    return (GSS_S_CALL_INACCESSIBLE_READ | GSS_S_NO_CONTEXT);
+
+    if (sessionkey == GSS_C_NO_BUFFER)
+	    return (GSS_S_CALL_INACCESSIBLE_WRITE);
+
+    return (GSS_S_COMPLETE);
+}
+
+
+OM_uint32 KRB5_CALLCONV
+gss_extended_get_session_key(minor_status,
+	     context_handle,
+	     qop_req,
+	     sessionkey)
+
+OM_uint32 *		minor_status;
+gss_ctx_id_t		context_handle;
+gss_qop_t		qop_req;
+gss_buffer_t		sessionkey;
+
+{
+    OM_uint32		status;
+    gss_union_ctx_id_t	ctx;
+    gss_mechanism	mech;
+
+    status = val_session_key_args(minor_status, context_handle,
+			      qop_req, sessionkey);
+    if (status != GSS_S_COMPLETE)
+	    return (status);
+
+    /*
+     * select the approprate underlying mechanism routine and
+     * call it.
+     */
+
+    ctx = (gss_union_ctx_id_t) context_handle;
+    if (ctx->internal_ctx_id == GSS_C_NO_CONTEXT)
+	return (GSS_S_NO_CONTEXT);
+    mech = gssint_get_mechanism (ctx->mech_type);
+
+    if (mech) {
+	if (mech->gss_extended_get_session_key) {
+	    status = mech->gss_extended_get_session_key(
+				    minor_status,
+				    ctx->internal_ctx_id,
+				    qop_req,
+				    sessionkey);
+	    if (status != GSS_S_COMPLETE)
+		map_error(minor_status, mech);
+	} else
+	    status = GSS_S_UNAVAILABLE;
+
+	return(status);
+    }
+
+    return (GSS_S_BAD_MECH);
+}
+
 OM_uint32 KRB5_CALLCONV
 gss_sign (minor_status,
           context_handle,

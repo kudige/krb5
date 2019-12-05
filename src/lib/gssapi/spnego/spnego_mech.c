@@ -213,6 +213,7 @@ static struct gss_config spnego_mechanism =
 	spnego_gss_context_time,	/* gss_context_time */
 	spnego_gss_get_mic,		/* gss_get_mic */
 	spnego_gss_verify_mic,		/* gss_verify_mic */
+	spnego_gss_extended_get_session_key, /* gss_extended_get_session_key */
 	spnego_gss_wrap,		/* gss_wrap */
 	spnego_gss_unwrap,		/* gss_unwrap */
 	spnego_gss_display_status,
@@ -2355,6 +2356,26 @@ spnego_gss_get_mic(
 		    qop_req,
 		    message_buffer,
 		    message_token);
+	return (ret);
+}
+
+OM_uint32 KRB5_CALLCONV
+spnego_gss_extended_get_session_key(
+    OM_uint32 *minor_status,        /* minor_status */
+    gss_ctx_id_t context_handle,       /* context_handle */
+    gss_qop_t qop_req,          /* qop_req */
+    gss_buffer_t sessionkey)      /* output_sessionkey_buffer */
+{
+	OM_uint32 ret;
+	spnego_gss_ctx_id_t sc = (spnego_gss_ctx_id_t)context_handle;
+
+	if (sc->ctx_handle == GSS_C_NO_CONTEXT)
+		return (GSS_S_NO_CONTEXT);
+
+	ret = gss_extended_get_session_key(minor_status,
+		    sc->ctx_handle,
+		    qop_req,
+		    sessionkey);
 	return (ret);
 }
 

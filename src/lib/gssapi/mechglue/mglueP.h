@@ -175,6 +175,13 @@ typedef struct gss_config {
 		    gss_buffer_t,	/* token_buffer */
 		    gss_qop_t*		/* qop_state */
 		    );
+	OM_uint32 		(KRB5_CALLCONV *gss_extended_get_session_key)
+	(
+			OM_uint32 *,        /* minor_status */
+			gss_ctx_id_t,       /* context_handle */
+			gss_qop_t,          /* qop_req */
+			gss_buffer_t      /* output_sessionkey_buffer */
+			);
     OM_uint32       (KRB5_CALLCONV *gss_wrap)
 	(
 		    OM_uint32*,		/* minor_status */

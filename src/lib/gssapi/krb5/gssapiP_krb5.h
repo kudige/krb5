@@ -749,6 +749,13 @@ OM_uint32 KRB5_CALLCONV krb5_gss_verify_mic
  gss_qop_t *                 /* qop_state */
 );
 
+OM_uint32 KRB5_CALLCONV krb5_gss_extended_get_session_key
+(OM_uint32 *,           /* minor_status */
+ gss_ctx_id_t,               /* context_handle */
+ gss_qop_t,                  /* qop_req */
+ gss_buffer_t                /* output_sessionkey_buffer */
+);
+
 OM_uint32 KRB5_CALLCONV krb5_gss_verify_mic_iov
 (OM_uint32 *,                /* minor_status */
  gss_ctx_id_t,               /* context_handle */
@@ -1363,6 +1370,10 @@ OM_uint32 KRB5_CALLCONV
 iakerb_gss_verify_mic_iov(OM_uint32 *minor_status, gss_ctx_id_t context_handle,
                           gss_qop_t *qop_state, gss_iov_buffer_desc *iov,
                           int iov_count);
+
+OM_uint32 KRB5_CALLCONV
+iakerb_gss_extended_get_session_key(OM_uint32 *minor_status, gss_ctx_id_t context_handle,
+                   gss_qop_t qop_req, gss_buffer_t sessionkey);
 
 OM_uint32 KRB5_CALLCONV
 iakerb_gss_wrap(OM_uint32 *minor_status, gss_ctx_id_t context_handle,

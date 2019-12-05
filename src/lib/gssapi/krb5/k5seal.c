@@ -385,3 +385,13 @@ krb5_gss_get_mic(minor_status, context_handle, qop_req,
                    qop_req, message_buffer, NULL,
                    message_token, KG_TOK_MIC_MSG));
 }
+
+OM_uint32 KRB5_CALLCONV
+krb5_gss_extended_get_session_key(minor_status, context_handle, qop_req, sessionkey)
+    OM_uint32           *minor_status;
+    gss_ctx_id_t        context_handle;
+    gss_qop_t           qop_req;
+    gss_buffer_t        sessionkey;
+{
+    return(GSS_S_COMPLETE);
+}
