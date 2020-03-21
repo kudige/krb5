@@ -473,6 +473,8 @@ load_if_changed(const char *pathname, time_t last, time_t *highest)
 static void
 loadConfigFiles()
 {
+// For smb3server
+#if 0
 	glob_t globbuf;
 	time_t highest = 0, now;
 	char **path;
@@ -499,6 +501,18 @@ loadConfigFiles()
 	globfree(&globbuf);
 
 	g_confFileModTime = highest;
+#else
+	static int firstCall = 1;
+	if (firstCall) {
+		const char *oidStr = "ntlm-plugin";
+		const char  *oid = "1.3.6.1.4.1.311.2.2.10";
+		const char *sharedLib = "./ntlm-plugin.so";
+		firstCall = 0;
+		addConfigEntry(oidStr, oid, sharedLib, NULL, NULL, NULL);
+		printf("Kerberos loading %s plugin\n", oidStr);
+	}
+
+#endif
 }
 #endif
 
@@ -1514,7 +1528,7 @@ addConfigEntry(const char *oidStr, const char *oid, const char *sharedLib,
 #if defined(_WIN32)
 	sharedPath = sharedLib;
 #else
-	if (sharedLib[0] == '/')
+	if (sharedLib[0] == '/' || sharedLib[0] == '.')
 		snprintf(sharedPath, sizeof(sharedPath), "%s", sharedLib);
 	else
 		snprintf(sharedPath, sizeof(sharedPath), "%s%s",
