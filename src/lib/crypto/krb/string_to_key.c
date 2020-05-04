@@ -56,9 +56,12 @@ krb5_c_string_to_key_with_params(krb5_context context, krb5_enctype enctype,
     if (salt == NULL)
         salt = &empty;
 
+#if 0
+    // SMB3: Allow insecure salt to support windows servers
     /* Fail gracefully if someone is using the old AFS string-to-key hack. */
     if (salt->length == SALT_TYPE_AFS_LENGTH)
         return EINVAL;
+#endif
 
     key->contents = malloc(keylength);
     if (key->contents == NULL)
