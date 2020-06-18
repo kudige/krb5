@@ -17,7 +17,8 @@ EHDRDIR= $(BUILDTOP)$(S)include$(S)gssapi
 HDRS=	$(EHDRDIR)$(S)gssapi.h \
 	$(EHDRDIR)$(S)gssapi_generic.h \
 	$(EHDRDIR)$(S)gssapi_alloc.h \
-	$(EHDRDIR)$(S)gssapi_ext.h
+	$(EHDRDIR)$(S)gssapi_ext.h \
+	$(EHDRDIR)$(S)gssapi_mspac.h
 
 MK_EHDRDIR=if test -d $(EHDRDIR); then :; else (set -x; mkdir $(EHDRDIR)); fi
 ##DOS##MK_EHDRDIR=rem
@@ -32,6 +33,8 @@ $(EHDRDIR)$(S)gssapi_alloc.h: $(EHDRDIR)$(S)timestamp $(srcdir)$(S)gssapi_alloc.
 	$(CP) $(srcdir)$(S)gssapi_alloc.h $@
 $(EHDRDIR)$(S)gssapi_ext.h: $(EHDRDIR)$(S)timestamp $(srcdir)$(S)gssapi_ext.h
 	$(CP) $(srcdir)$(S)gssapi_ext.h $@
+$(EHDRDIR)$(S)gssapi_mspac.h: $(EHDRDIR)$(S)timestamp $(srcdir)$(S)gssapi_mspac.h
+	$(CP) $(srcdir)$(S)gssapi_mspac.h $@
 
 $(EHDRDIR)$(S)timestamp:
 	$(MK_EHDRDIR)
@@ -103,7 +106,7 @@ STLIBOBJS = \
 	util_token.o \
 	gssapi_err_generic.o
 
-EXPORTED_HEADERS= gssapi_generic.h  gssapi_ext.h gssapi_alloc.h
+EXPORTED_HEADERS= gssapi_generic.h  gssapi_ext.h gssapi_alloc.h gssapi_mspac.h
 EXPORTED_BUILT_HEADERS= gssapi.h
 
 $(OBJS): $(EXPORTED_HEADERS) $(ETHDRS)
