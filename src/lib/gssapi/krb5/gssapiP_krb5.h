@@ -1167,6 +1167,10 @@ struct krb5_gss_import_cred_req {
 };
 
 OM_uint32
+gss_krb5int_get_mspac(OM_uint32 *, const gss_ctx_id_t,
+                        const gss_OID, gss_buffer_set_t *);
+
+OM_uint32
 gss_krb5int_import_cred(OM_uint32 *minor_status,
                         gss_cred_id_t *cred,
                         const gss_OID desired_oid,

@@ -83,6 +83,7 @@
 #include "k5-int.h"
 #include "gssapiP_krb5.h"
 #include "mglueP.h"
+#include "gssapi/gssapi_mspac.h"
 
 #ifndef NO_PASSWORD
 #include <pwd.h>
@@ -364,6 +365,10 @@ static struct {
     {
         {GET_SEC_CONTEXT_SASL_SSF_OID_LENGTH, GET_SEC_CONTEXT_SASL_SSF_OID},
         gss_krb5int_sec_context_sasl_ssf
+    },
+    {
+        {GSSAPI_GET_MSPAC_OID_LEN, GSSAPI_GET_MSPAC_OID},
+        gss_krb5int_get_mspac
     }
 };
 
